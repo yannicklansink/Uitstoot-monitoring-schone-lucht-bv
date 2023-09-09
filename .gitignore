@@ -1,6 +1,7 @@
 # reference: https://github.com/github/gitignore/blob/main/Python.gitignore
 
 opdracht/
+myenv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
