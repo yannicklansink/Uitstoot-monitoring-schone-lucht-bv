@@ -1,0 +1,6 @@
+0001 Shell               Van Leeuwenhoeklaan           2   2713 RB Zoetermeer          2  2  30000          nan            nan         ja  1  Ben van Beurden     .
+0002 ASML                High Tech Campus              44  5656 AE Eindhoven           14 22 100000         nan            nan         nee                        .
+0003 Tata Steel          Wenckebachstraat              1   1951 JZ Velsen-Noord        28 11 20000          nan            nan         ja  3  Henrik Adam         .
+0004 Dow Chemical        Herbert H. Dowweg             5   4542 NM Hoek                44 55 40000          nan            nan         ja  2  Herbert Henry Dow   .
+0005 Philips             Amstelplein                   2   1096 BC Amsterdam           70 90 100000         nan            nan         nee                        .
+0006 TNO                 Stieltjesweg                  1   2628 CK Delft               80 20 60000          nan            nan         nee                        .
