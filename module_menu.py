@@ -2,6 +2,7 @@
 
 import module_inspecteurs as mi
 import module_metingen as mm
+import module_bedrijven as bedrijven
 
 
 # start applicatie
@@ -9,11 +10,11 @@ import module_metingen as mm
 while True:
     print("\nHoofdmenu\n=========")
     print("1. Inlezen inspecteursbestand")
-    print("2. Inlezen en tonen CO2 data")
-    print("3. Overzicht inspecteurs")
-    print("4. <invullen>")  # Inlezen Bedrijven (bedrijven.txt)
-    print("5. <invullen>")  # Inlezen Bezoeken (bezoekrapporten.txt)
-    print("6. <invullen>")  #
+    print("2. Overzicht inspecteurs")
+    print("3. Inlezen en tonen CO2 data")
+    print("4. Inlezen Bedrijfsbestanden")  # Inlezen Bedrijven (bedrijven.txt)
+    print("5. Overzicht bedrijven")
+    print("6. <invullen>")  # Inlezen Bezoeken (bezoekrapporten.txt)
     print("7. <invullen>")
     print("0. stoppen\n")
 
@@ -25,13 +26,13 @@ while True:
     if keuze == 1:
         mi.lees_inspecteurs()
     elif keuze == 2:
-        mm.lees_gas_co2()
-    elif keuze == 3:
         mi.toon_inspecteurs()
+    elif keuze == 3:
+        mm.lees_gas_co2()
     elif keuze == 4:
-        pass
+        bedrijven.lees_bedrijven()
     elif keuze == 5:
-        pass
+        bedrijven.toon_bedrijven()
     elif keuze == 6:
         pass
     elif keuze == 7:
