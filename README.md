@@ -4,8 +4,7 @@
 
 ## Vragen
 
-- Hoe weet ik waar op het gassen grafiek een bedrijf zich bevindt?
-- Wat wordt er bedoelt met de totale uitstoot CO2-equivalent?
+- Wat wordt er bedoelt met de totale uitstoot CO2-equivalent? (is dat de totale_berekening van alle verschillende gas uitstoten bij elkaar?)
 
 ## Todo
 

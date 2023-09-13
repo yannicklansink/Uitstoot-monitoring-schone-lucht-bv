@@ -5,38 +5,47 @@ from module_bedrijven import lijst_bedrijven
 # This will automatically use the correct path seperator to support more OSs
 CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 BEZOEKENBESTAND = os.path.join(CURRENT_DIRECTORY, "sample-files", "bezoekrapporten.txt")
+FILES_READ = set()
 
 lijst_rapporten = []  # lijst met alle rapporten
 
 
-def lees_rapporten():
+def lees_rapporten(file_name=BEZOEKENBESTAND):
     """Inlezen van het tekstbestand met bezoekrapporten"""
-    try:
-        with open(BEZOEKENBESTAND, "r") as file:
-            for line in file:
-                if line.endswith(".\n"):
-                    inspecteurscode = line[0:3].strip()
-                    bedrijfscode = line[4:8].strip()
-                    bezoekdatum = line[9:19].strip() or None
-                    datum_opstellen_rapport = line[20:30].strip() or None
-                    status = line[31:42].strip() or None
-                    opmerking = line[42:-2].strip() or None
 
-                    Bezoek(
-                        inspecteurscode,
-                        bedrijfscode,
-                        bezoekdatum,
-                        datum_opstellen_rapport,
-                        status,
-                        opmerking,
-                    )
-            print(f"Bezoekrapporten uit {BEZOEKENBESTAND} ingelezen!")
+    if file_name in FILES_READ:
+        print(f"Bestand {file_name} is al ingelezen!")
+        return
+
+    try:
+        with open(file_name, "r") as file:
+            for line in file:
+                inspecteurscode = line[0:3].strip()
+                bedrijfscode = line[4:8].strip()
+                bezoekdatum = line[9:19].strip() or None
+                datum_opstellen_rapport = line[20:30].strip() or None
+                status = line[31:42].strip() or None
+                opmerking = line[42:-2].strip() or None
+
+                Bezoek(
+                    inspecteurscode,
+                    bedrijfscode,
+                    bezoekdatum,
+                    datum_opstellen_rapport,
+                    status,
+                    opmerking,
+                )
+                
+            print(f"Bezoekrapporten uit {file_name} ingelezen!")
+            FILES_READ.add(file_name)
+
     except FileNotFoundError:
-        print(f"Bestand {BEZOEKENBESTAND} niet gevonden!")
+        print(f"Bestand {file_name} niet gevonden!")
 
 
 def toon_rapporten():
     """Overzicht tonen van alle bezoeksrapporten en daaraan gekoppeld bedrijf en inspecteur"""
+    print("lengte lijst rapporten: ", len(lijst_rapporten))
     for rapport in lijst_rapporten:
         inspecteur = rapport.get_inspecteur_by_code(rapport._Bezoek__inspecteurscode)
         if inspecteur:

@@ -4,24 +4,30 @@ import os
 # This will automatically use the correct path seperator to support more OSs
 CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 INSPECTEURSBESTAND = os.path.join(CURRENT_DIRECTORY, "sample-files", "inspecteurs.txt")
-
+FILES_READ = set()
 
 lijst_inspecteurs = []  # lijst met alle inspecteur objecten
 
 
-def lees_inspecteurs():
+def lees_inspecteurs(file_name=INSPECTEURSBESTAND):
     """Inlezen van het tekstbestand met de inspecteursgegevens"""
+
+    if file_name in FILES_READ:
+        print(f"Bestand {file_name} is al ingelezen!")
+        return
+
     try:
-        with open(INSPECTEURSBESTAND, mode="r") as inspecteurs:
+        with open(file_name, mode="r") as inspecteurs:
             for record in inspecteurs:
                 code = record[0:3]
                 naam = record[4:24]
                 standplaats = record[24:44]
                 Inspecteur(code, naam, standplaats)
-        print("Bestand", INSPECTEURSBESTAND, "ingelezen")
+        print("Bestand", file_name, "ingelezen")
+        FILES_READ.add(file_name)
         return 0
     except FileNotFoundError:
-        print("Bestand", INSPECTEURSBESTAND, "niet gevonden")
+        print("Bestand", file_name, "niet gevonden")
         return 1
 
 
