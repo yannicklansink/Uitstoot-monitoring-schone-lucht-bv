@@ -2,7 +2,8 @@ Indeling van de 3 tekstbestanden
 ================================
 
 bezoekrapporten:
-inspecteurscode, bedrijfscode, bezoekdatum, datum_opstellen_rapport, status, opmerkingen
+inspecteurscode, bedrijfscode, bezoekdatum, datum_opstellen_rapport, 
+status, opmerkingen
 
 bedrijven:
 code, naam, straat, huisnummer, postcode, plaats, breedtegraad, lengtegraad, max_toegestande_uitstoot, berekende_uitstoot, boete, controle, inspectie_frequentie, contactpersoon

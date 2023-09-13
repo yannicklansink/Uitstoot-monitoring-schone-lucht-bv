@@ -16,7 +16,8 @@ def lees_gas_co2():
     print(gasarray)
     print("------")
     print(gasarray[99])
-    print(len(gasarray))
+    print(len(gasarray))  # 100
+
     plt.imshow(gasarray)
     plt.colorbar()
     plt.show()

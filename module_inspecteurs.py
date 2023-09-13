@@ -27,13 +27,11 @@ def lees_inspecteurs():
 
 def toon_inspecteurs():
     """Maak een overzicht van alle inspecteursgegevens"""
-    print("        Overzicht inspecteurs")
-    print("        =====================\n")
-    print("Code Naam                 Standplaats")
-    print("---- -------------------- --------------------")
-
+    print("Overzicht inspecteurs")
+    print("=====================\n")
     for inspecteur in lijst_inspecteurs:
         inspecteur.toonGegevens()
+        print("-" * 40)
 
 
 class Inspecteur:
@@ -68,4 +66,7 @@ class Inspecteur:
         self.__bezoekrapporten.append(bezoekrapport)
 
     def toonGegevens(self):
-        print(self.__code + " ", self.__naam, self.__standplaats)
+        print(f"\tInspecteurscode: {self.__code}")
+        print(f"\tNaam: {self.__naam}")
+        print(f"\tStandplaats: {self.__standplaats}")
+        # print(self.__code + " ", self.__naam, self.__standplaats)

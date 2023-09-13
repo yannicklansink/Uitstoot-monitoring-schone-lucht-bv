@@ -1,13 +1,14 @@
 ## Decisions
 
+- De gebruiker moet zelf de inspecteurs, bedrijven en bezoekrapporten inlezen.
+
 ## Vragen
 
 - Hoe weet ik waar op het gassen grafiek een bedrijf zich bevindt?
-- Waarom staan er in de txt bestanden geen kopjes waarover het gaat? Bij de naam van een bedrijf kan je het nog nagaan, maar bij andere data weet ik niet waar het over gaat.
+- Wat wordt er bedoelt met de totale uitstoot CO2-equivalent?
 
 ## Todo
 
-- bedrijven inlezen
 - bezoekrapporten inlezen
 
 -
