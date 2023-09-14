@@ -16,7 +16,7 @@ while True:
     print("5. Overzicht bedrijvenrapporten")
     print("6. Inlezen bezoeksrapporten")  # Inlezen Bezoeken (bezoekrapporten.txt)
     print("7. Overzicht bezoeksrapporten")
-    print("8. Plot bedrijven") # work in progress
+    print("8. Plot bedrijven uitstoot")  # work in progress
     print("0. stoppen\n")
 
     try:

@@ -9,10 +9,10 @@ BEDRIJFSBESTAND = os.path.join(CURRENT_DIRECTORY, "sample-files", "bedrijven.txt
 
 FILES_READ = set()
 
-C1 = 1      #CO2
-C2 = 25     #CH4
-C3 = 5      #NO2
-C4 = 1000   #NH3
+C1 = 1  # CO2
+C2 = 25  # CH4
+C3 = 5  # NO2
+C4 = 1000  # NH3
 
 lijst_bedrijven = []  # lijst met alle bedrijven
 
@@ -88,8 +88,8 @@ def toon_bedrijven():
         bedrijf.toonGegevens()
         print("-" * 40)
 
+
 def bereken_bedrijven_uitstoot():
-    
     for bedrijf in lijst_bedrijven:
         print("bedrijf: ", bedrijf.getCode())
         x, y = int(bedrijf.getBreedtegraad()), int(bedrijf.getLengtegraad())
@@ -99,7 +99,7 @@ def bereken_bedrijven_uitstoot():
 
         for i in range(-2, 3):  # This will loop from -2 to 2
             for j in range(-2, 3):
-                if 0 <= x+i < 100 and 0 <= y+j < 100:  # Check bounds
+                if 0 <= x + i < 100 and 0 <= y + j < 100:  # Check bounds
                     if i == 0 and j == 0:
                         gas1 = bedrijf.getUitstootGas1(x, y)
                         gas2 = bedrijf.getUitstootGas2(x, y)
@@ -110,29 +110,29 @@ def bereken_bedrijven_uitstoot():
                         weighted_uitstoot += uitstoot1m2
                     elif abs(i) == 2 or abs(j) == 2:
                         # 16X | 2de ring
-                        gas1 = bedrijf.getUitstootGas1(x+i, y+j)
-                        gas2 = bedrijf.getUitstootGas2(x+i, y+j)
-                        gas3 = bedrijf.getUitstootGas3(x+i, y+j)
-                        gas4 = bedrijf.getUitstootGas4(x+i, y+j)
+                        gas1 = bedrijf.getUitstootGas1(x + i, y + j)
+                        gas2 = bedrijf.getUitstootGas2(x + i, y + j)
+                        gas3 = bedrijf.getUitstootGas3(x + i, y + j)
+                        gas4 = bedrijf.getUitstootGas4(x + i, y + j)
 
                         uitstoot1m2 = C1 * gas1 + C2 * gas2 + C3 * gas3 + C4 * gas4
-                        weighted_uitstoot += (uitstoot1m2 * 0.25)
+                        weighted_uitstoot += uitstoot1m2 * 0.25
                     else:
-                        # 8x | 1e ring 
-                        gas1 = bedrijf.getUitstootGas1(x+i, y+j)
-                        gas2 = bedrijf.getUitstootGas2(x+i, y+j)
-                        gas3 = bedrijf.getUitstootGas3(x+i, y+j)
-                        gas4 = bedrijf.getUitstootGas4(x+i, y+j)
+                        # 8x | 1e ring
+                        gas1 = bedrijf.getUitstootGas1(x + i, y + j)
+                        gas2 = bedrijf.getUitstootGas2(x + i, y + j)
+                        gas3 = bedrijf.getUitstootGas3(x + i, y + j)
+                        gas4 = bedrijf.getUitstootGas4(x + i, y + j)
 
                         uitstoot1m2 = C1 * gas1 + C2 * gas2 + C3 * gas3 + C4 * gas4
-                        weighted_uitstoot += (uitstoot1m2 * 0.5)
+                        weighted_uitstoot += uitstoot1m2 * 0.5
 
         # Set this computed value to the bedrijf object
-        print("weighted_uitstoot bedrijf: ", bedrijf.getCode(), "is: ", weighted_uitstoot)
+        print(
+            "weighted_uitstoot bedrijf: ", bedrijf.getCode(), "is: ", weighted_uitstoot
+        )
         bedrijf.setBerekendeUitstoot(weighted_uitstoot)
 
-
-# The function you wrote doesn't work. It does get the total_uitstoot right, 
 
 class Bedrijf:
     def __init__(
@@ -145,7 +145,7 @@ class Bedrijf:
         plaats=None,
         breedtegraad=None,
         lengtegraad=None,
-        max_toegestande_uitstoot=None,
+        max_toegestaande_uitstoot=None,
         berekende_uitstoot=None,
         boete=None,
         controle=None,
@@ -161,7 +161,7 @@ class Bedrijf:
         self.__plaats = plaats
         self.__breedtegraad = breedtegraad
         self.__lengtegraad = lengtegraad
-        self.__max_toegestande_uitstoot = max_toegestande_uitstoot
+        self.__max_toegestaande_uitstoot = max_toegestaande_uitstoot
         self.__berekende_uitstoot = berekende_uitstoot
         self.__boete = boete
         self.__controle = controle
@@ -179,27 +179,26 @@ class Bedrijf:
         print(f"\tPlaats: {self.__plaats}")
         print(f"\tBreedtegraad: {self.__breedtegraad}")
         print(f"\tLengtegraad: {self.__lengtegraad}")
-        print(f"\tMax Toegestande Uitstoot: {self.__max_toegestande_uitstoot}")
+        print(f"\tMax Toegestaande Uitstoot: {self.__max_toegestaande_uitstoot}")
         print(f"\tBerekende Uitstoot: {self.__berekende_uitstoot}")
         print(f"\tBoete: {self.__boete}")
         print(f"\tControle: {self.__controle}")
         print(f"\tInspectie Frequentie: {self.__inspectie_frequentie}")
         print(f"\tContactpersoon: {self.__contactpersoon}")
-        # print("-" * 60 + "\n")
 
     def getCode(self):
         return self.__code
-    
+
     def getBreedtegraad(self):
         return self.__breedtegraad
-    
+
     def getLengtegraad(self):
         return self.__lengtegraad
-    
+
     def getUitstootGas1(self, breedtegraad, lengtegraad):
         gas = metingen.getUitstootGasCO2(breedtegraad, lengtegraad)
         return gas
-    
+
     def getUitstootGas2(self, breedtegraad, lengtegraad):
         gas = metingen.getUitstootGasCH4(breedtegraad, lengtegraad)
         return gas
@@ -207,10 +206,17 @@ class Bedrijf:
     def getUitstootGas3(self, breedtegraad, lengtegraad):
         gas = metingen.getUitstootGasNO2(breedtegraad, lengtegraad)
         return gas
-    
+
     def getUitstootGas4(self, breedtegraad, lengtegraad):
         gas = metingen.getUitstootNH3(breedtegraad, lengtegraad)
         return gas
-    
+
     def setBerekendeUitstoot(self, berekende_uitstoot):
         self.__berekende_uitstoot = berekende_uitstoot
+
+    def getMaxToegestaandeUitstoot(self):
+        return self.__max_toegestaande_uitstoot
+
+    def calculateBoete(self):
+        if self.__berekende_uitstoot > self.__max_toegestaande_uitstoot:
+            self.__boete = 
