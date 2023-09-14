@@ -88,41 +88,51 @@ def toon_bedrijven():
         bedrijf.toonGegevens()
         print("-" * 40)
 
-# TODO: de middenring berekeing is juist, maar de totaal_uitstoot klopt nog niet
-#       Zorg ervoor dat de 1e ring en 2e ring nog goed worden berekend.
 def bereken_bedrijven_uitstoot():
     
     for bedrijf in lijst_bedrijven:
         print("bedrijf: ", bedrijf.getCode())
         x, y = int(bedrijf.getBreedtegraad()), int(bedrijf.getLengtegraad())
-        
-        # Compute the berekende_uitstoot using the provided formula
-        uitstoot_gas1 = bedrijf.getUitstootGas1()
-        uitstoot_gas2 = bedrijf.getUitstootGas2()
-        uitstoot_gas3 = bedrijf.getUitstootGas3()
-        uitstoot_gas4 = bedrijf.getUitstootGas4()
 
-        total_uitstoot = C1 * uitstoot_gas1 + C2 * uitstoot_gas2 + C3 * uitstoot_gas3 + C4 * uitstoot_gas4
-        
         # Calculate the weighted uitstoot
-        weighted_uitstoot = total_uitstoot
+        weighted_uitstoot = 0
+
         for i in range(-2, 3):  # This will loop from -2 to 2
             for j in range(-2, 3):
                 if 0 <= x+i < 100 and 0 <= y+j < 100:  # Check bounds
                     if i == 0 and j == 0:
-                        print("middenkern!")
-                        weighted_uitstoot += total_uitstoot
+                        gas1 = bedrijf.getUitstootGas1(x, y)
+                        gas2 = bedrijf.getUitstootGas2(x, y)
+                        gas3 = bedrijf.getUitstootGas3(x, y)
+                        gas4 = bedrijf.getUitstootGas4(x, y)
+
+                        uitstoot1m2 = C1 * gas1 + C2 * gas2 + C3 * gas3 + C4 * gas4
+                        weighted_uitstoot += uitstoot1m2
                     elif abs(i) == 2 or abs(j) == 2:
-                        print("1e ring")
-                        weighted_uitstoot += total_uitstoot * 0.25
+                        # 16X | 2de ring
+                        gas1 = bedrijf.getUitstootGas1(x+i, y+j)
+                        gas2 = bedrijf.getUitstootGas2(x+i, y+j)
+                        gas3 = bedrijf.getUitstootGas3(x+i, y+j)
+                        gas4 = bedrijf.getUitstootGas4(x+i, y+j)
+
+                        uitstoot1m2 = C1 * gas1 + C2 * gas2 + C3 * gas3 + C4 * gas4
+                        weighted_uitstoot += (uitstoot1m2 * 0.25)
                     else:
-                        print("2e ring")
-                        weighted_uitstoot += total_uitstoot * 0.5
+                        # 8x | 1e ring 
+                        gas1 = bedrijf.getUitstootGas1(x+i, y+j)
+                        gas2 = bedrijf.getUitstootGas2(x+i, y+j)
+                        gas3 = bedrijf.getUitstootGas3(x+i, y+j)
+                        gas4 = bedrijf.getUitstootGas4(x+i, y+j)
+
+                        uitstoot1m2 = C1 * gas1 + C2 * gas2 + C3 * gas3 + C4 * gas4
+                        weighted_uitstoot += (uitstoot1m2 * 0.5)
 
         # Set this computed value to the bedrijf object
-        print("bedrijf: ", bedrijf.getCode(), "heeft een berekende uitstoot van: ", weighted_uitstoot)
+        print("weighted_uitstoot bedrijf: ", bedrijf.getCode(), "is: ", weighted_uitstoot)
         bedrijf.setBerekendeUitstoot(weighted_uitstoot)
 
+
+# The function you wrote doesn't work. It does get the total_uitstoot right, 
 
 class Bedrijf:
     def __init__(
@@ -186,25 +196,21 @@ class Bedrijf:
     def getLengtegraad(self):
         return self.__lengtegraad
     
-    def getUitstootGas1(self):
-        gas1 = metingen.getUitstootGasCO2(self.__breedtegraad, self.__lengtegraad)
-        print("gas 1: ", gas1)
-        return gas1
+    def getUitstootGas1(self, breedtegraad, lengtegraad):
+        gas = metingen.getUitstootGasCO2(breedtegraad, lengtegraad)
+        return gas
     
-    def getUitstootGas2(self):
-        gas1 = metingen.getUitstootGasCH4(self.__breedtegraad, self.__lengtegraad)
-        print("gas 2: ", gas1)
-        return gas1
+    def getUitstootGas2(self, breedtegraad, lengtegraad):
+        gas = metingen.getUitstootGasCH4(breedtegraad, lengtegraad)
+        return gas
 
-    def getUitstootGas3(self):
-        gas1 = metingen.getUitstootGasNO2(self.__breedtegraad, self.__lengtegraad)
-        print("gas 3: ", gas1)
-        return gas1
+    def getUitstootGas3(self, breedtegraad, lengtegraad):
+        gas = metingen.getUitstootGasNO2(breedtegraad, lengtegraad)
+        return gas
     
-    def getUitstootGas4(self):
-        gas1 = metingen.getUitstootNH3(self.__breedtegraad, self.__lengtegraad)
-        print("gas 4: ", gas1)
-        return gas1
+    def getUitstootGas4(self, breedtegraad, lengtegraad):
+        gas = metingen.getUitstootNH3(breedtegraad, lengtegraad)
+        return gas
     
     def setBerekendeUitstoot(self, berekende_uitstoot):
         self.__berekende_uitstoot = berekende_uitstoot
