@@ -40,6 +40,7 @@ while True:
         rapporten.toon_rapporten()
     elif keuze == 8:
         bedrijven.bereken_bedrijven_uitstoot()
+        bedrijven.calcuate_bedrijven_boete()
     elif keuze == 0:
         break
     else:

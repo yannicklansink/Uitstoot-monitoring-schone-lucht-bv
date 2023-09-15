@@ -14,6 +14,8 @@ C2 = 25  # CH4
 C3 = 5  # NO2
 C4 = 1000  # NH3
 
+BOETE_FACTOR = 1
+
 lijst_bedrijven = []  # lijst met alle bedrijven
 
 
@@ -131,7 +133,12 @@ def bereken_bedrijven_uitstoot():
         print(
             "weighted_uitstoot bedrijf: ", bedrijf.getCode(), "is: ", weighted_uitstoot
         )
-        bedrijf.setBerekendeUitstoot(weighted_uitstoot)
+        bedrijf.setBerekendeUitstoot(format(weighted_uitstoot, ".2f"))
+
+
+def calcuate_bedrijven_boete():
+    for bedrijf in lijst_bedrijven:
+        bedrijf.calculateBoete()
 
 
 class Bedrijf:
@@ -218,5 +225,17 @@ class Bedrijf:
         return self.__max_toegestaande_uitstoot
 
     def calculateBoete(self):
-        if self.__berekende_uitstoot > self.__max_toegestaande_uitstoot:
-            self.__boete = 
+        print(type(self.__berekende_uitstoot))
+        print(type(self.__max_toegestaande_uitstoot))
+        if float(self.__berekende_uitstoot) > float(self.__max_toegestaande_uitstoot):
+            self.__boete = format(
+                (
+                    float(self.__berekende_uitstoot)
+                    - float(self.__max_toegestaande_uitstoot)
+                )
+                * BOETE_FACTOR,
+                ".2f",
+            )
+            print("boete type: ", type(self.__boete))
+        else:
+            self.__boete = 0
