@@ -33,11 +33,41 @@ def lees_inspecteurs(file_name=INSPECTEURSBESTAND):
 
 def toon_inspecteurs():
     """Maak een overzicht van alle inspecteursgegevens"""
+    if not is_lijst_inspecteurs_full():
+        return
     print("Overzicht inspecteurs")
     print("=====================\n")
     for inspecteur in lijst_inspecteurs:
-        inspecteur.toonGegevens()
+        inspecteur.toon_gegevens()
         print("-" * 40)
+
+
+def toon_inspecteurs_code_en_naam():
+    """Maak een overzicht van alle codes en name van inspecteurs"""
+    if not is_lijst_inspecteurs_full():
+        return
+    print("Overzicht inspecteurs")
+    print("=====================\n")
+    for inspecteur in lijst_inspecteurs:
+        inspecteur.toon_code_en_naam()
+        print("-" * 40)
+
+
+def inspecteur_exists(code):
+    """Check of een inspecteur met gegeven code bestaat"""
+    if not is_lijst_inspecteurs_full():
+        return
+    for inspecteur in lijst_inspecteurs:
+        if inspecteur.getCode() == code:
+            return True
+    return False
+
+
+def is_lijst_inspecteurs_full():
+    if not lijst_inspecteurs:
+        print("Er zijn geen inspecteurs gevonden")
+        return False
+    return True
 
 
 class Inspecteur:
@@ -71,8 +101,11 @@ class Inspecteur:
     def addBezoekrapport(self, bezoekrapport):
         self.__bezoekrapporten.append(bezoekrapport)
 
-    def toonGegevens(self):
+    def toon_gegevens(self):
         print(f"\tInspecteurscode: {self.__code}")
         print(f"\tNaam: {self.__naam}")
         print(f"\tStandplaats: {self.__standplaats}")
-        # print(self.__code + " ", self.__naam, self.__standplaats)
+
+    def toon_code_en_naam(self):
+        print(f"\tInspecteurscode: {self.__code}")
+        print(f"\tNaam: {self.__naam}")

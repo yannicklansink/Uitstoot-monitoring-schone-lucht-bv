@@ -1,6 +1,7 @@
 import os
 from module_inspecteurs import lijst_inspecteurs
 from module_bedrijven import lijst_bedrijven
+from datetime import datetime, date, MINYEAR, MAXYEAR
 
 # This will automatically use the correct path seperator to support more OSs
 CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
@@ -35,7 +36,7 @@ def lees_rapporten(file_name=BEZOEKENBESTAND):
                     status,
                     opmerking,
                 )
-                
+
             print(f"Bezoekrapporten uit {file_name} ingelezen!")
             FILES_READ.add(file_name)
 
@@ -66,6 +67,40 @@ def toon_rapporten():
         print("Status:", rapport._Bezoek__status)
         print("Opmerking:", rapport._Bezoek__opmerking)
         print("=" * 40 + "\n")
+
+
+def toon_rapport_by_bedrijf(
+    bedrijfscode, begin_datum=date(MINYEAR, 1, 1), eind_datum=date(MAXYEAR, 1, 1)
+):
+    """Overzicht tonen van alle bezoekrapport van een bedrijven met mogelijk een begin- en einddatum aflopend gesorteerd op datum"""
+
+
+def toon_rapport_by_inspecteur(
+    inspecteurscode, begin_datum=date(MINYEAR, 1, 1), eind_datum=date(MAXYEAR, 1, 1)
+):
+    """Overzicht tonen van alle bezoekenrapporten van een inspecteurs met mogelijk een begin- en einddatum aflopend gesorteerd op datum"""
+    lijst_met_bezoeken_per_inspecteur = []
+
+    for bezoek in lijst_rapporten:
+        if bezoek.get_inspecteurscode() == inspecteurscode:
+            try:
+                bezoekdatum = datetime.strptime(
+                    bezoek.get_bezoekdatum(), "%d-%m-%Y"
+                ).date()
+            except ValueError:
+                print("Kon de bezoekdatum niet converteren naar een date")
+            if begin_datum <= bezoekdatum <= eind_datum:
+                lijst_met_bezoeken_per_inspecteur.append(bezoek)
+
+    # Sort the list based on the date in descending order (optional)
+    lijst_met_bezoeken_per_inspecteur.sort(
+        key=lambda x: datetime.strptime(x.get_bezoekdatum(), "%d-%m-%Y"), reverse=True
+    )
+
+    # Display the filtered and sorted reports
+    for bezoek_van_inspecteur in lijst_met_bezoeken_per_inspecteur:
+        print()
+        bezoek_van_inspecteur.toon_gegevens()
 
 
 class Bezoek:
@@ -99,3 +134,17 @@ class Bezoek:
         for bedrijf in lijst_bedrijven:
             if bedrijf.getCode() == bedrijfscode:
                 return bedrijf
+
+    def get_inspecteurscode(self):
+        return self.__inspecteurscode
+
+    def get_bezoekdatum(self):
+        return self.__bezoekdatum
+
+    def toon_gegevens(self):
+        print(f"\tinspecteurscode: {self.__inspecteurscode}")
+        print(f"\tbedrijfscode: {self.__bedrijfscode}")
+        print(f"\tbezoekdatum: {self.__bezoekdatum}")
+        print(f"\tdatum_opstellen_rapport: {self.__datum_opstellen_rapport}")
+        print(f"\tstatus: {self.__status}")
+        print(f"\topmerking: {self.__opmerking}")

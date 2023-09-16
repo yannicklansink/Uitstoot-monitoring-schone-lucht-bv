@@ -93,7 +93,6 @@ def toon_bedrijven():
 
 def bereken_bedrijven_uitstoot():
     for bedrijf in lijst_bedrijven:
-        print("bedrijf: ", bedrijf.getCode())
         x, y = int(bedrijf.getBreedtegraad()), int(bedrijf.getLengtegraad())
 
         # Calculate the weighted uitstoot
@@ -130,15 +129,12 @@ def bereken_bedrijven_uitstoot():
                         weighted_uitstoot += uitstoot1m2 * 0.5
 
         # Set this computed value to the bedrijf object
-        print(
-            "weighted_uitstoot bedrijf: ", bedrijf.getCode(), "is: ", weighted_uitstoot
-        )
         bedrijf.setBerekendeUitstoot(format(weighted_uitstoot, ".2f"))
 
 
-def calcuate_bedrijven_boete():
+def bereken_bedrijven_boete():
     for bedrijf in lijst_bedrijven:
-        bedrijf.calculateBoete()
+        bedrijf.berekenBoete()
 
 
 class Bedrijf:
@@ -203,19 +199,19 @@ class Bedrijf:
         return self.__lengtegraad
 
     def getUitstootGas1(self, breedtegraad, lengtegraad):
-        gas = metingen.getUitstootGasCO2(breedtegraad, lengtegraad)
+        gas = metingen.get_uitstoot_gas_CO2(breedtegraad, lengtegraad)
         return gas
 
     def getUitstootGas2(self, breedtegraad, lengtegraad):
-        gas = metingen.getUitstootGasCH4(breedtegraad, lengtegraad)
+        gas = metingen.get_uitstoot_gas_CH4(breedtegraad, lengtegraad)
         return gas
 
     def getUitstootGas3(self, breedtegraad, lengtegraad):
-        gas = metingen.getUitstootGasNO2(breedtegraad, lengtegraad)
+        gas = metingen.get_uitstoot_gas_NO2(breedtegraad, lengtegraad)
         return gas
 
     def getUitstootGas4(self, breedtegraad, lengtegraad):
-        gas = metingen.getUitstootNH3(breedtegraad, lengtegraad)
+        gas = metingen.get_uitstoot_NH3(breedtegraad, lengtegraad)
         return gas
 
     def setBerekendeUitstoot(self, berekende_uitstoot):
@@ -224,9 +220,7 @@ class Bedrijf:
     def getMaxToegestaandeUitstoot(self):
         return self.__max_toegestaande_uitstoot
 
-    def calculateBoete(self):
-        print(type(self.__berekende_uitstoot))
-        print(type(self.__max_toegestaande_uitstoot))
+    def berekenBoete(self):
         if float(self.__berekende_uitstoot) > float(self.__max_toegestaande_uitstoot):
             self.__boete = format(
                 (
@@ -236,6 +230,15 @@ class Bedrijf:
                 * BOETE_FACTOR,
                 ".2f",
             )
-            print("boete type: ", type(self.__boete))
+            print(
+                "\t",
+                self.__naam,
+                "heeft de volgende boete gekregen:",
+                self.__boete,
+                "\n\t",
+                "door een berekende uitstoot van:",
+                self.__berekende_uitstoot,
+                "\n",
+            )
         else:
             self.__boete = 0
