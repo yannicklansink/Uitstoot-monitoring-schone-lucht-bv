@@ -1,6 +1,7 @@
 ## Decisions
 
 - De gebruiker moet zelf de inspecteurs, bedrijven en bezoekrapporten inlezen.
+- Er is gekozen om de print statements waar de gebruiker mee interacteerd (front-end) voor deze applicatie niet los te koppelen van de logica aangezien de applicatie overzichtelijk genoeg is voor de functionaliteit dat het heeft.
 
 ## Vragen
 

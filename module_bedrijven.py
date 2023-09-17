@@ -84,6 +84,9 @@ def lees_bedrijven(file_name=BEDRIJFSBESTAND):
 
 def toon_bedrijven():
     """Overzicht tonen van alle bedrijven"""
+    if not is_lijst_bedrijven_full():
+        return
+
     print("Overzicht bedrijven")
     print("=====================\n")
     for bedrijf in lijst_bedrijven:
@@ -92,6 +95,9 @@ def toon_bedrijven():
 
 
 def bereken_bedrijven_uitstoot():
+    if not is_lijst_bedrijven_full():
+        return
+
     for bedrijf in lijst_bedrijven:
         x, y = int(bedrijf.getBreedtegraad()), int(bedrijf.getLengtegraad())
 
@@ -135,6 +141,34 @@ def bereken_bedrijven_uitstoot():
 def bereken_bedrijven_boete():
     for bedrijf in lijst_bedrijven:
         bedrijf.berekenBoete()
+
+
+def is_lijst_bedrijven_full():
+    if not lijst_bedrijven:
+        print("Er zijn geen bedrijven gevonden")
+        return False
+    return True
+
+
+def toon_bedrijven_code_en_naam():
+    """Maak een overzicht van alle codes en namen van bedrijven"""
+    if not is_lijst_bedrijven_full():
+        return
+    print("Overzicht bedrijven")
+    print("=====================\n")
+    for bedrijf in lijst_bedrijven:
+        bedrijf.toon_code_en_naam()
+        print("-" * 40)
+
+
+def bedrijf_exists(code):
+    """Check of een bedrijf met gegeven code bestaat"""
+    if not is_lijst_bedrijven_full():
+        return
+    for bedrijf in lijst_bedrijven:
+        if bedrijf.getCode() == code:
+            return True
+    return False
 
 
 class Bedrijf:
@@ -192,6 +226,9 @@ class Bedrijf:
     def getCode(self):
         return self.__code
 
+    def get_naam(self):
+        return self.__naam
+
     def getBreedtegraad(self):
         return self.__breedtegraad
 
@@ -242,3 +279,7 @@ class Bedrijf:
             )
         else:
             self.__boete = 0
+
+    def toon_code_en_naam(self):
+        print(f"\tBedrijfscode: {self.__code}")
+        print(f"\tNaam: {self.__naam}")

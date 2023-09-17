@@ -43,7 +43,7 @@ def toon_inspecteurs():
 
 
 def toon_inspecteurs_code_en_naam():
-    """Maak een overzicht van alle codes en name van inspecteurs"""
+    """Maak een overzicht van alle codes en namen van inspecteurs"""
     if not is_lijst_inspecteurs_full():
         return
     print("Overzicht inspecteurs")

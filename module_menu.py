@@ -18,6 +18,7 @@ def handle_bezoeksrapport_keuze():
 
     if bezoeksrapport_keuze == 1:
         rapporten.toon_rapporten()
+
     elif bezoeksrapport_keuze == 2:
         try:
             if not mi.is_lijst_inspecteurs_full():
@@ -25,30 +26,22 @@ def handle_bezoeksrapport_keuze():
             mi.toon_inspecteurs_code_en_naam()
             inspecteurs_keuze = input("Kies de inspecteurscode: ")
             if not mi.inspecteur_exists(inspecteurs_keuze):
-                print("De inspecteur code is niet gevonden")
+                print("De inspecteurscode is niet gevonden")
                 return
-        except:
+        except ValueError:
             print("Ongeldige invoer. Probeer opnieuw.")
             return
-        # check of de gebruiker nog een begin- en einddatum wilt invullen
-        try:
-            incorrect_antwoord = True
-            while incorrect_antwoord:
-                begin_of_einddatum = input(
-                    "Wil je nog een begin- en einddatum invullen? (y)/(n): "
-                )
-                begin_of_einddatum = begin_of_einddatum.lower()
-                if begin_of_einddatum != "y" and begin_of_einddatum != "n":
-                    print("Kies 'y' of 'n'")
-                else:
-                    incorrect_antwoord = False
+        try:  # check of de gebruiker nog een begin- en einddatum wilt invullen
+            begin_of_einddatum = begin_of_einddatum_invullen()
             if begin_of_einddatum == "n":
                 rapporten.toon_rapport_by_inspecteur(inspecteurs_keuze)
             else:
                 gekozen_begin_datum = get_date_input(
-                    "Kies een begin datum: (YYYY-MM-DD)"
+                    "Kies een begin datum (YYYY-MM-DD): "
                 )
-                gekozen_eind_datum = get_date_input("Kies een eind datum: (YYYY-MM-DD)")
+                gekozen_eind_datum = get_date_input(
+                    "Kies een eind datum (YYYY-MM-DD): "
+                )
                 rapporten.toon_rapport_by_inspecteur(
                     inspecteurs_keuze, gekozen_begin_datum, gekozen_eind_datum
                 )
@@ -57,12 +50,54 @@ def handle_bezoeksrapport_keuze():
             return
 
     elif bezoeksrapport_keuze == 3:
-        rapporten.toon_rapport_by_bedrijf()
+        try:
+            if not bedrijven.is_lijst_bedrijven_full():
+                return
+            bedrijven.toon_bedrijven_code_en_naam()
+            bedrijfscode_keuze = input("Kies de bedrijfscode: ")
+            if not bedrijven.bedrijf_exists(bedrijfscode_keuze):
+                print("De bedrijfscode is niet gevonden")
+                return
+        except ValueError:
+            print("Ongeldige invoer. Probeer opnieuw.")
+            return
+        try:  # check of de gebruiker nog een begin- en einddatum wilt invullen
+            begin_of_einddatum = begin_of_einddatum_invullen()
+            if begin_of_einddatum == "n":
+                rapporten.toon_rapport_by_bedrijf(bedrijfscode_keuze)
+            else:
+                gekozen_begin_datum = get_date_input(
+                    "Kies een begin datum (YYYY-MM-DD): "
+                )
+                gekozen_eind_datum = get_date_input(
+                    "Kies een eind datum (YYYY-MM-DD): "
+                )
+                rapporten.toon_rapport_by_bedrijf(
+                    bedrijfscode_keuze, gekozen_begin_datum, gekozen_eind_datum
+                )
+        except ValueError:
+            print("Ongeldige invoer. Probeer opnieuw.")
+            return
+
     elif keuze == 0:
         return
     else:
         print("ongeldige keuze")
         return
+
+
+def begin_of_einddatum_invullen():
+    incorrect_antwoord = True
+    while incorrect_antwoord:
+        begin_of_einddatum = input(
+            "Wil je nog een begin- en einddatum invullen? (y)/(n): "
+        )
+        begin_of_einddatum = begin_of_einddatum.lower()
+        if begin_of_einddatum != "y" and begin_of_einddatum != "n":
+            print("Kies 'y' of 'n'")
+        else:
+            incorrect_antwoord = False
+            return begin_of_einddatum
 
 
 def get_date_input(prompt):
@@ -72,14 +107,16 @@ def get_date_input(prompt):
             valid_date = datetime.strptime(user_input, "%Y-%m-%d").date()
             return valid_date
         except ValueError:
-            print("Verkeerd geformateerd. Gebruik het volgende formaat YYYY-MM-DD.")
+            print(
+                "Verkeerd geformateerd. Gebruik het volgende formaat YYYY-MM-DD of type STOP om terug te gaan"
+            )
 
 
 # start applicatie
 while True:
     print("\nHoofdmenu\n=========")
-    print("1. Inlezen en tonen CO2 data")
-    print("2. Inlezen inspecteursbestanden")
+    print("1. Inlezen alle bestanden")  # Inlezen inspecteurs, bedrijven, bezoeken
+    print("2. Inlezen inspecteursbestanden")  # Inlezen Inspecteurs (inspecteurs.txt)
     print("3. Overzicht inspecteurs")
     print("4. Inlezen bedrijfsbestanden")  # Inlezen Bedrijven (bedrijven.txt)
     print("5. Overzicht bedrijvenrapporten")
@@ -97,8 +134,9 @@ while True:
         keuze = -1
 
     if keuze == 1:
-        # mm.lees_gas_co2()
-        print("implement something...")
+        mi.lees_inspecteurs()
+        bedrijven.lees_bedrijven()
+        rapporten.lees_rapporten()
     elif keuze == 2:
         mi.lees_inspecteurs()
     elif keuze == 3:

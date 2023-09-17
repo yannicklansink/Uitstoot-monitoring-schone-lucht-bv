@@ -37,7 +37,7 @@ def lees_rapporten(file_name=BEZOEKENBESTAND):
                     opmerking,
                 )
 
-            print(f"Bezoekrapporten uit {file_name} ingelezen!")
+            print(f"Bezoekrapporten uit {file_name} ingelezen")
             FILES_READ.add(file_name)
 
     except FileNotFoundError:
@@ -51,7 +51,7 @@ def toon_rapporten():
         inspecteur = rapport.get_inspecteur_by_code(rapport._Bezoek__inspecteurscode)
         if inspecteur:
             print("inspecteurs info:")
-            inspecteur.toonGegevens()
+            inspecteur.toon_gegevens()
         else:
             print("Inspecteurscode:", rapport._Bezoek__inspecteurscode)
 
@@ -72,13 +72,47 @@ def toon_rapporten():
 def toon_rapport_by_bedrijf(
     bedrijfscode, begin_datum=date(MINYEAR, 1, 1), eind_datum=date(MAXYEAR, 1, 1)
 ):
-    """Overzicht tonen van alle bezoekrapport van een bedrijven met mogelijk een begin- en einddatum aflopend gesorteerd op datum"""
+    """Overzicht tonen van alle bezoekrapporten van een bedrijf met mogelijk een begin- en einddatum aflopend gesorteerd op datum"""
+    lijst_met_bezoeken_per_bedrijf = []
+
+    for bezoek in lijst_rapporten:
+        if bezoek.get_bedrijfscode() == bedrijfscode:
+            try:
+                bezoekdatum = datetime.strptime(
+                    bezoek.get_bezoekdatum(), "%d-%m-%Y"
+                ).date()
+            except ValueError:
+                print("Kon de bezoekdatum niet converteren naar een date")
+            if begin_datum <= bezoekdatum <= eind_datum:
+                lijst_met_bezoeken_per_bedrijf.append(bezoek)
+
+    # Sorteer de lijst gebaseerd op de bezoekdatum
+    lijst_met_bezoeken_per_bedrijf.sort(
+        key=lambda x: datetime.strptime(x.get_bezoekdatum(), "%d-%m-%Y"), reverse=True
+    )
+
+    if not lijst_met_bezoeken_per_bedrijf:
+        print("Er zijn geen bezoeksrapporten gevonden van het bedrijf:", bedrijfscode)
+        print("In de periode van", begin_datum, "|", eind_datum)
+        return
+
+    for bezoek_van_bedrijf in lijst_met_bezoeken_per_bedrijf:
+        print()
+        print("\tBedrijfs info:", bezoek_van_bedrijf.get_bedrijfscode())
+        inspecteur = bezoek_van_bedrijf.get_inspecteur_by_code(
+            bezoek_van_bedrijf._Bezoek__inspecteurscode
+        )
+        if inspecteur:
+            print("\tInspecteursnaam:", inspecteur.getNaam())
+        else:
+            print("\tInspecteurscode:", bezoek_van_bedrijf._Bezoek__inspecteurscode)
+        bezoek_van_bedrijf.toon_gegevens()
 
 
 def toon_rapport_by_inspecteur(
     inspecteurscode, begin_datum=date(MINYEAR, 1, 1), eind_datum=date(MAXYEAR, 1, 1)
 ):
-    """Overzicht tonen van alle bezoekenrapporten van een inspecteurs met mogelijk een begin- en einddatum aflopend gesorteerd op datum"""
+    """Overzicht tonen van alle bezoekrapporten van een inspecteur met mogelijk een begin- en einddatum aflopend gesorteerd op datum"""
     lijst_met_bezoeken_per_inspecteur = []
 
     for bezoek in lijst_rapporten:
@@ -92,14 +126,28 @@ def toon_rapport_by_inspecteur(
             if begin_datum <= bezoekdatum <= eind_datum:
                 lijst_met_bezoeken_per_inspecteur.append(bezoek)
 
-    # Sort the list based on the date in descending order (optional)
+    # Sorteer de lijst gebaseerd op de bezoekdatum
     lijst_met_bezoeken_per_inspecteur.sort(
         key=lambda x: datetime.strptime(x.get_bezoekdatum(), "%d-%m-%Y"), reverse=True
     )
 
-    # Display the filtered and sorted reports
+    if not lijst_met_bezoeken_per_inspecteur:
+        print(
+            "Er zijn geen bezoeksrapporten gevonden van de inspecteur:", inspecteurscode
+        )
+        print("In de periode van", begin_datum, "|", eind_datum)
+        return
+
     for bezoek_van_inspecteur in lijst_met_bezoeken_per_inspecteur:
         print()
+        print("\tInspecteurs info:", bezoek_van_inspecteur.get_inspecteurscode())
+        bedrijf = bezoek_van_inspecteur.get_bedrijf_by_code(
+            bezoek_van_inspecteur._Bezoek__bedrijfscode
+        )
+        if bedrijf:
+            print("\tBedrijfsnaam:", bedrijf.get_naam())
+        else:
+            print("\tBedrijfscode:", bezoek_van_inspecteur._Bezoek__bedrijfscode)
         bezoek_van_inspecteur.toon_gegevens()
 
 
@@ -138,13 +186,16 @@ class Bezoek:
     def get_inspecteurscode(self):
         return self.__inspecteurscode
 
+    def get_bedrijfscode(self):
+        return self.__bedrijfscode
+
     def get_bezoekdatum(self):
         return self.__bezoekdatum
 
     def toon_gegevens(self):
-        print(f"\tinspecteurscode: {self.__inspecteurscode}")
-        print(f"\tbedrijfscode: {self.__bedrijfscode}")
-        print(f"\tbezoekdatum: {self.__bezoekdatum}")
-        print(f"\tdatum_opstellen_rapport: {self.__datum_opstellen_rapport}")
-        print(f"\tstatus: {self.__status}")
-        print(f"\topmerking: {self.__opmerking}")
+        # print(f"\tinspecteurscode: {self.__inspecteurscode}")
+        # print(f"\tbedrijfscode: {self.__bedrijfscode}")
+        print(f"\tBezoekdatum: {self.__bezoekdatum}")
+        print(f"\tDatum_opstellen_rapport: {self.__datum_opstellen_rapport}")
+        print(f"\tStatus: {self.__status}")
+        print(f"\tOpmerking: {self.__opmerking}")
