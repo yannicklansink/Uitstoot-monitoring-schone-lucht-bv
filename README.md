@@ -1,21 +1,3 @@
-## Decisions
-
-- De gebruiker moet zelf de inspecteurs, bedrijven en bezoekrapporten inlezen.
-
-## Vragen
-
-- Wat wordt er bedoelt met de totale uitstoot CO2-equivalent? (is dat de berekende_uitstoot van alle verschillende gas uitstoten bij elkaar?)
-
-## Todo
-
-- bezoekrapporten inlezen
-
--
-
-## Problems
-
-- Er is geen check of er al een inspecteur met dezelfde code is ingelezen.
-
 ## Installation and Setup Instructions
 
 Prerequisites:
@@ -41,8 +23,6 @@ Activate the virtual environment:
 ```
 .\myenv\Scripts\activate
 ```
-
-macOS and Linux:
 
 Install Dependencies:
 With the virtual environment activated, install the required packages:
