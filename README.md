@@ -1,11 +1,10 @@
 ## Decisions
 
 - De gebruiker moet zelf de inspecteurs, bedrijven en bezoekrapporten inlezen.
-- Er is gekozen om de print statements waar de gebruiker mee interacteerd (front-end) voor deze applicatie niet los te koppelen van de logica aangezien de applicatie overzichtelijk genoeg is voor de functionaliteit dat het heeft.
 
 ## Vragen
 
-- Wat wordt er bedoelt met de totale uitstoot CO2-equivalent? (is dat de totale_berekening van alle verschillende gas uitstoten bij elkaar?)
+- Wat wordt er bedoelt met de totale uitstoot CO2-equivalent? (is dat de berekende_uitstoot van alle verschillende gas uitstoten bij elkaar?)
 
 ## Todo
 

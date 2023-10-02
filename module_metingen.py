@@ -7,18 +7,6 @@ import module_bedrijven as bedrijven
 CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 GASSENBESTAND = os.path.join(CURRENT_DIRECTORY, "sample-files", "gassen.csv")
 
-
-# def lees_gas_co2():
-#     """Inlezen CO2 data vanuit het csv-gassenbestand en plotten data"""
-#     gasarray = (
-#         np.loadtxt(GASSENBESTAND, delimiter=",", skiprows=1, usecols=2)
-#     ).reshape(100, 100)
-
-#     plt.imshow(gasarray)
-#     plt.colorbar()
-#     plt.show()
-
-
 # Load all gas data into arrays
 co2_data = np.loadtxt(GASSENBESTAND, delimiter=",", skiprows=1, usecols=2).reshape(
     100, 100
@@ -44,7 +32,6 @@ def analyse_rapport_berekenen(number_of_locaties):
         )
         return
 
-    # Alle waarden in de array waar bedrijven zitten op 0 zetten
     totale_gasses = np.empty_like(co2_data)
 
     for i in range(0, 100):
