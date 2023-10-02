@@ -31,7 +31,7 @@ def handle_bezoeksrapport_keuze():
         except ValueError:
             print("Ongeldige invoer. Probeer opnieuw.")
             return
-        try:  # check of de gebruiker nog een begin- en einddatum wilt invullen
+        try: 
             begin_of_einddatum = begin_of_einddatum_invullen()
             if begin_of_einddatum == "n":
                 rapporten.toon_rapport_by_inspecteur(inspecteurs_keuze)
@@ -61,7 +61,7 @@ def handle_bezoeksrapport_keuze():
         except ValueError:
             print("Ongeldige invoer. Probeer opnieuw.")
             return
-        try:  # check of de gebruiker nog een begin- en einddatum wilt invullen
+        try: 
             begin_of_einddatum = begin_of_einddatum_invullen()
             if begin_of_einddatum == "n":
                 rapporten.toon_rapport_by_bedrijf(bedrijfscode_keuze)
@@ -115,12 +115,12 @@ def get_date_input(prompt):
 # start applicatie
 while True:
     print("\nHoofdmenu\n=========")
-    print("1. Inlezen alle bestanden")  # Inlezen inspecteurs, bedrijven, bezoeken
-    print("2. Inlezen inspecteursbestanden")  # Inlezen Inspecteurs (inspecteurs.txt)
+    print("1. Inlezen alle bestanden")
+    print("2. Inlezen inspecteursbestanden")  
     print("3. Overzicht inspecteurs")
-    print("4. Inlezen bedrijfsbestanden")  # Inlezen Bedrijven (bedrijven.txt)
+    print("4. Inlezen bedrijfsbestanden")  
     print("5. Overzicht bedrijvenrapporten")
-    print("6. Inlezen bezoeksrapporten")  # Inlezen Bezoeken (bezoekrapporten.txt)
+    print("6. Inlezen bezoeksrapporten")  
     print("7. Overzicht bezoeksrapporten")
     print("8. Bereken uitstoot en boete per bedrijf")
     print(

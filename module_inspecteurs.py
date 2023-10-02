@@ -6,7 +6,8 @@ CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 INSPECTEURSBESTAND = os.path.join(CURRENT_DIRECTORY, "sample-files", "inspecteurs.txt")
 FILES_READ = set()
 
-lijst_inspecteurs = []  # lijst met alle inspecteur objecten
+# lijst met alle inspecteur objecten
+lijst_inspecteurs = []  
 
 
 def lees_inspecteurs(file_name=INSPECTEURSBESTAND):

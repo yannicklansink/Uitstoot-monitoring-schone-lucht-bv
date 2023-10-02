@@ -49,9 +49,6 @@ def analyse_rapport_berekenen(number_of_locaties):
     lijst_vervuilende_plekken = get_lijst_met_meest_vervuilende_locaties(
         totale_gasses, number_of_locaties
     )
-    # Het metingenbestand bevat minimaal 1 zo’n locatie en de functie
-    # moet de coördinaten van deze locatie en de gemeten concentraties tonen.
-    # In het analyserapport moet functioneel beschreven worden hoe het programma deze analyse uitvoert
     print_analyse_rapport_met_gas_waarden(lijst_vervuilende_plekken)
 
 

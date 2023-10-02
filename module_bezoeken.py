@@ -8,7 +8,8 @@ CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 BEZOEKENBESTAND = os.path.join(CURRENT_DIRECTORY, "sample-files", "bezoekrapporten.txt")
 FILES_READ = set()
 
-lijst_rapporten = []  # lijst met alle rapporten
+# lijst met alle rapporten
+lijst_rapporten = []  
 
 
 def lees_rapporten(file_name=BEZOEKENBESTAND):
@@ -193,8 +194,6 @@ class Bezoek:
         return self.__bezoekdatum
 
     def toon_gegevens(self):
-        # print(f"\tinspecteurscode: {self.__inspecteurscode}")
-        # print(f"\tbedrijfscode: {self.__bedrijfscode}")
         print(f"\tBezoekdatum: {self.__bezoekdatum}")
         print(f"\tDatum_opstellen_rapport: {self.__datum_opstellen_rapport}")
         print(f"\tStatus: {self.__status}")

@@ -16,7 +16,8 @@ C4 = 1000  # NH3
 
 BOETE_FACTOR = 1
 
-lijst_bedrijven = []  # lijst met alle bedrijven
+# lijst met alle bedrijven
+lijst_bedrijven = []  
 
 
 def lees_bedrijven(file_name=BEDRIJFSBESTAND):
