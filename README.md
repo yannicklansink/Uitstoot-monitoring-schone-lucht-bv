@@ -34,5 +34,5 @@ pip install -r requirements.txt
 Running the Project:
 
 ```
-python module.menu.py
+python module_menu.py
 ```
